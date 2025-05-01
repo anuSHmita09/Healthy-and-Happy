@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Guest Registration with Tabs</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #84bdee;
+      margin: 0;
+      padding: 0;
+      
+    }
+
+    .logo {
+      position: absolute;
+      top: -180px; 
+      left: 50%;
+      transform: translateX(-50%);
+      width: 150px;
+      height: auto;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 30px;
+      border-radius: 14px;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.2);
+      background-color: rgba(158, 164, 228, 0); 
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 12px;
+      border-bottom: 3px solid #ccc;
+      font-weight: bold;
+      cursor: pointer;
+      background-color:  rgba(255, 255, 255, 0);
+      transition: 0.3s;
+    }
+
+    .tab.active {
+      border-color: #0077b6;
+      background-color: #f4f9fc;
+      color: #7fc6ec;
+    }
+
+    h2 {
+      text-align: center;
+      color: #020202;
+    }
+
+    .form-step {
+      display: none;
+      position: relative;
+      padding: 20px;
+      background-color:  rgba(236, 241, 244, 0.9);
+      border-radius: 10px;
+    }
+
+    .form-step.active {
+      display: block;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 95%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 2px solid #100f0f;
+      color: black;
+    }
+
+    input:read-only {
+      background-color: #e0f7fa;
+    }
+
+
+    button {
+      margin-top: 20px;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 12px;
+      background-color: #0077b6;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #005f86;
+    }
+
+    .summary-box {
+      background: #f0faff;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .summary-box strong {
+      color: #005f73;
+    }
+
+    .remarks {
+      color: #d00000;
+      font-weight: bold;
+    }
+
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(135deg, #90e0ef, #48cae4);
+      color: #023047;
+      padding: 30px 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      display: none;
+      z-index: 1000;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .popup.show {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translate(-50%, -60%); }
+      to { opacity: 1; transform: translate(-50%, -50%); }
+    }
+
+  </style>
+</head>
+<body>
+
+  <img src="download.png" alt="Logo" class="logo">
+
+<div class="container">
+  <h2>Guest Registration</h2>
+
+  <div class="tabs">
+    <div class="tab active" id="tab1" data-step="1">Step 1: Personal</div>
+  <div class="tab" id="tab2" data-step="2">Step 2: Body Eval</div>
+  <div class="tab" id="tab3" data-step="3">Step 3: Payment</div>
+  <div class="tab" id="tab4" data-step="4">Step 4: Summary</div>
+  </div>
+
+  <form id="registrationForm">
+    <!-- Step 1 -->
+    <div class="form-step active" id="step1">
+      <div class="form-group"><label>ID</label><input type="text" id="id" placeholder="05RS25/001" required /></div>
+      <div class="form-group"><label>Name</label><input type="text" id="name" required /></div>
+      <div class="form-group"><label>Gender</label>
+        <select id="gender" required>
+          <option value="">Select</option>
+          <option>Male</option>
+          <option>Female</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Date of Birth</label><input type="date" id="dob" required /></div>
+      <div class="form-group"><label>Age</label><input type="number" id="age" readonly /></div>
+      <div class="form-group"><label>Phone</label><input type="text" id="phone" placeholder="10 digit only" required /></div>
+      <div class="form-group"><label>Address</label><input type="text" id="address" required /></div>
+      <div class="form-group"><label>Coach</label><input type="text" id="coach" required /></div>
+      <div class="form-group"><label>Trial Date</label><input type="date" id="trialDate" required /></div>
+      <div class="form-group"><label>Gold UMS Date</label><input type="date" id="goldUMS" readonly /></div>
+      <button type="button" onclick="nextStep(2)">Next</button>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="form-step" id="step2">
+      <div class="form-group"><label>Height (cm)</label><input type="number" id="height" required /></div>
+      <div class="form-group"><label>Weight (kg)</label><input type="number" id="weight" required /></div>
+      <div class="form-group"><label>B.M.I.</label><input type="text" id="bmi" required  /></div>
+      <div class="form-group"><label>Body Fat (%)</label><input type="text" id="bodyFat" required /></div>
+      <div class="form-group"><label>R.M.</label><input type="text" id="rm" required  /></div>
+      <div class="form-group"><label>V.F.A.</label><input type="number" id="vfa" required /></div>
+      <div class="form-group"><label>Body Age</label><input type="number" id="bodyAge" required /></div>
+      <div class="form-group"><label>Remarks</label><input type="number" id="remarks" required /></div>
+      <div class="form-group"><label>Medications (if any)</label><input type="number" id="medications" required /></div>
+      <button type="button" onclick="prevStep(1)">Back</button>
+      <button type="button" onclick="nextStep(3)">Next</button>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="form-step" id="step3">
+      <div class="form-group"><label>Total Amount</label><input type="text" value="₹800" id="totalAmount" readonly /></div>
+      <div class="form-group"><label>Payment Type</label>
+        <select id="paymentType" required>
+          <option value="">Select</option>
+          <option>Cash</option>
+          <option>UPI</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Amount Paid</label><input type="number" id="amountPaid" required oninput="updateAmountDue()" /></div>
+      <div class="form-group"><label>Amount Due</label><input type="text" value="₹800" id="amountDue" readonly /></div>
+      <button type="button" onclick="prevStep(2)">Back</button>
+      <button type="submit">Submit</button>
+    </div>
+
+    <!-- Summary -->
+    <div class="form-step" id="step4">
+      <h3 style="text-align: center;">HEALTHY and HAPPY COMMUNITY</h3>
+      <h3>Guest Profile Summary</h3>
+      <div id="summaryContent"></div>
+      <button type="button" onclick="prevStep(3)">Back</button>
+      <button type="button" id="downloadPdfBtn">Download PDF</button>
+    </div>
+  </form>
+</div>
+
+<div class="popup" id="popup"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+  function nextStep(step) {
+    document.querySelectorAll('.form-step').forEach(el => el.classList.remove('active'));
+    document.getElementById('step' + step).classList.add('active');
+
+    document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab' + step).classList.add('active');
+  }
+
+  function prevStep(step) {
+    document.querySelectorAll('.form-step').forEach(el => el.classList.remove('active'));
+    document.getElementById('step' + step).classList.add('active');
+
+    document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab' + step).classList.add('active');
+  }
+
+  document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', function () {
+    const step = this.getAttribute('data-step');
+    nextStep(step);
+  });
+});
+
+const totalAmount = 800;
+    function updateAmountDue() {
+        const amountPaid = parseFloat(document.getElementById("amountPaid").value) || 0;
+        const amountDue = totalAmount - amountPaid;
+        document.getElementById("amountDue").value = "₹" + amountDue;
+    }
+
+  document.getElementById("dob").addEventListener("change", function () {
+    const dob = new Date(this.value);
+    const today = new Date();
+    let age = today.getFullYear() - dob.getFullYear();
+    if (today.getMonth() < dob.getMonth() || (today.getMonth() === dob.getMonth() && today.getDate() < dob.getDate())) age--;
+    document.getElementById("age").value = age;
+  });
+
+  document.getElementById("trialDate").addEventListener("change", function () {
+    const trial = new Date(this.value);
+    if (!isNaN(trial)) {
+      trial.setDate(trial.getDate() + 3);
+      document.getElementById("goldUMS").value = trial.toISOString().split("T")[0];
+    }
+  });
+
+  document.getElementById("registrationForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const summary = `
+      <div class="summary-box"><strong>Name:</strong> ${document.getElementById("name").value}</div>
+      <div class="summary-box"><strong>Gender:</strong> ${document.getElementById("gender").value}</div>
+      <div class="summary-box"><strong>Age:</strong> ${document.getElementById("age").value}</div>
+      <div class="summary-box"><strong>Phone:</strong> ${document.getElementById("phone").value}</div>
+      <div class="summary-box"><strong>Height:</strong> ${document.getElementById("height").value} cm</div>
+      <div class="summary-box"><strong>Weight:</strong> ${document.getElementById("weight").value} kg</div>
+      <div class="summary-box"><strong>BMI:</strong> ${document.getElementById("bmi").value}</div>
+      <div class="summary-box"><strong>Body Fat:</strong> ${document.getElementById("bodyFat").value}</div>
+      <div class="summary-box"><strong>RM:</strong> ${document.getElementById("rm").value}</div>
+      <div class="summary-box"><strong>Body Age:</strong> ${document.getElementById("bodyAge").value}</div>
+      <div class="summary-box"><strong>Amount Due:</strong> ₹800</div>
+      <div class="summary-box"><strong>Amount Paid:</strong> ₹${document.getElementById("amountPaid").value}</div>
+      <div class="summary-box"><strong>Payment Type:</strong> ${document.getElementById("paymentType").value}</div>
+    `;
+    document.getElementById("summaryContent").innerHTML = summary;
+    nextStep(4);
+  });
+
+  document.getElementById("downloadPdfBtn").addEventListener("click", function () {
+    const doc = new jsPDF();
+    doc.text("HEALTHY and HAPPY COMMUNITY", 20, 20);
+    doc.text("Guest Registration Summary", 20, 20);
+    doc.text(document.getElementById("summaryContent").innerText, 20, 30);
+    doc.save("guest_registration_summary.pdf");
+  });
+
+  document.querySelectorAll('a[data-bs-toggle="pill"]').forEach(function (tabLink) {
+    tabLink.addEventListener('click', function (e) {
+      e.preventDefault();
+      const tabTrigger = new bootstrap.Tab(this);
+      tabTrigger.show();
+    });
+  });
+</script>
+
+</body>
+</html>
