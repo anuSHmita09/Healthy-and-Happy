@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Height & Weight Chart</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #f7b733, #fc4a1a);
+      color: #333;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+
+    .header {
+      background-color: #ffcc00;
+      padding: 15px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    h2 {
+      background-color: #228B22;
+      color: white;
+      margin: 0;
+      padding: 15px;
+      text-align: center;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #32CD32;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    @media (max-width: 600px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+
+      th {
+        position: sticky;
+        top: 0;
+      }
+
+      td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+      }
+
+      td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        text-align: left;
+        font-weight: bold;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">WEIGHT CHART according to HEIGHT</div>
+    <h2>HEIGHT & WEIGHT</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Height</th>
+          <th>Men (kg)</th>
+          <th>Women (kg)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>5'0" (152 cm)</td><td>48–52</td><td>45–50</td></tr>
+        <tr><td>5'1" (155 cm)</td><td>50–54</td><td>47–52</td></tr>
+        <tr><td>5'2" (157 cm)</td><td>52–56</td><td>49–54</td></tr>
+        <tr><td>5'3" (160 cm)</td><td>54–58</td><td>51–55</td></tr>
+        <tr><td>5'4" (163 cm)</td><td>56–60</td><td>53–57</td></tr>
+        <tr><td>5'5" (165 cm)</td><td>58–62</td><td>55–59</td></tr>
+        <tr><td>5'6" (168 cm)</td><td>60–65</td><td>57–61</td></tr>
+        <tr><td>5'7" (170 cm)</td><td>62–67</td><td>59–63</td></tr>
+        <tr><td>5'8" (173 cm)</td><td>65–70</td><td>61–65</td></tr>
+        <tr><td>5'9" (175 cm)</td><td>67–72</td><td>63–66</td></tr>
+        <tr><td>5'10" (178 cm)</td><td>70–75</td><td>65–69</td></tr>
+        <tr><td>5'11" (180 cm)</td><td>72–77</td><td>67–71</td></tr>
+        <tr><td>6'0" (183 cm)</td><td>75–79</td><td>70–73</td></tr>
+        <tr><td>6'1" (185 cm)</td><td>77–81</td><td>72–75</td></tr>
+        <tr><td>6'2" (188 cm)</td><td>80–84</td><td>78–80</td></tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
