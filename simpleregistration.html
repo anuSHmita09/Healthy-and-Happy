@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Guest Registration</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e7f5ec;
+      padding: 20px;
+    }
+
+    header {
+        background-color: #0ba29d;
+        color: white;
+        padding: 20px;
+        text-align: center;
+      }
+
+      nav {
+        background: #eee;
+        display: flex;
+        justify-content: center;
+        padding: 10px 0;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+
+      nav a {
+        margin: 0 20px;
+        text-decoration: none;
+        color: #333;
+        font-weight: bold;
+        transition: color 0.3s;
+      }
+
+      nav a:hover {
+        color: #0ba29d;
+      }
+
+    h2 {
+      color: #2f7a4b;
+      border-bottom: 2px solid #2f7a4b;
+      padding-bottom: 5px;
+      margin-top: 30px;
+    }
+    .form-grid {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .form-group {
+      flex: 1;
+      min-width: 250px;
+      position: relative;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    input, select {
+      width: 95%;
+      padding: 10px;
+      border: 1px solid #2f7a4b;
+      border-radius: 5px;
+    }
+    .focus-indicator {
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: #2f7a4b;
+      transition: width 0.3s;
+    }
+    input:focus + .focus-indicator,
+    select:focus + .focus-indicator {
+      width: 100%;
+    }
+    .buttons {
+      margin-top: 30px;
+    }
+    .btn {
+      background-color: #2f7a4b;
+      color: white;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 25px;
+      font-size: 1em;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+    footer {
+        background-color: #0ba29d;
+        color: white;
+        text-align: center;
+        padding: 5px;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+      }
+  </style>
+</head>
+<body>
+
+    <header>
+        <h1>Healthy and Happy Community</h1>
+      </header>
+  
+      <nav>
+        <a href="#">About</a>
+        <a href="#">Dashboard</a>
+        <a href="simpleregistration.html">Clients</a>
+        <a href="idealweight.html">Weight Tracker</a>
+        <a href="#">Payments</a>
+        <a href="#">Settings</a>
+        <a href="index.html">Logout</a>
+      </nav>
+
+  <form id="guestForm">
+
+    <!-- Section 1: Personal Info -->
+    <h2>Personal Information</h2>
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="id">Guest ID</label>
+        <input type="text" id="id" class="form-control" placeholder="05RS25/001" required>
+        <div class="focus-indicator"></div>
+      </div>
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" class="form-control" placeholder="Your name" required>
+        <div class="focus-indicator"></div>
+      </div>
+    </div>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="gender">Gender</label>
+        <select id="gender" class="form-control" required>
+          <option value="">Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+        <div class="focus-indicator"></div>
+      </div>
+      <div class="form-group">
+        <label for="dob">Date of Birth</label>
+        <input type="date" id="dob" class="form-control" required oninput="calculateAge()">
+        <div class="focus-indicator"></div>
+      </div>
+    </div>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="age">Age</label>
+        <input type="number" id="age" class="form-control" readonly>
+        <div class="focus-indicator"></div>
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="text" id="phone" class="form-control" placeholder="10 digits only" required>
+        <div class="focus-indicator"></div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="address">Address</label>
+      <input type="text" id="address" class="form-control" placeholder="Your address" required>
+      <div class="focus-indicator"></div>
+    </div>
+
+    <br>
+
+    <div class="form-group">
+      <label for="TrialDate">Trial Date</label>
+      <input type="date" id="TrialDate" class="form-control" required>
+      <div class="focus-indicator"></div>
+    </div>
+
+    <br>
+
+    <div class="form-group">
+      <label for="goldUMS">Gold UMS Date</label>
+      <input type="date" id="goldUMS" class="form-control" readonly>
+      <div class="focus-indicator"></div>
+    </div>
+
+    <div class="buttons">
+        <button type="submit" class="btn">Save</button>
+      </div>
+
+    <!-- Section 2: Body Evaluation -->
+    <h2>Body Evaluation</h2>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="height">Height (cm)</label>
+        <input type="number" id="height" class="form-control" required>
+        <div class="focus-indicator"></div>
+      </div>
+      <div class="form-group">
+        <label for="weight">Weight (kg)</label>
+        <input type="number" id="weight" class="form-control" required>
+        <div class="focus-indicator"></div>
+      </div>
+    </div>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="bmi">B.M.I.</label>
+        <input type="text" id="bmi" class="form-control" required>
+        <div class="focus-indicator"></div>
+      </div>
+      <div class="form-group">
+        <label for="bodyFat">Body Fat (%)</label>
+        <input type="text" id="bodyFat" class="form-control" required>
+        <div class="focus-indicator"></div>
+      </div>
+    </div>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="rm">R.M.</label>
+        <input type="text" id="rm" class="form-control" required>
+        <div class="focus-indicator"></div>
+      </div>
+      <div class="form-group">
+        <label for="vfa">V.F.A.</label>
+        <input type="number" id="vfa" class="form-control" required>
+        <div class="focus-indicator"></div>
+      </div>
+    </div>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="bodyAge">Body Age</label>
+        <input type="number" id="bodyAge" class="form-control" required>
+        <div class="focus-indicator"></div>
+      </div>
+      <div class="form-group">
+        <label for="remarks">Remarks</label>
+        <input type="text" id="remarks" class="form-control" required>
+        <div class="focus-indicator"></div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="medications">Medications (if any)</label>
+      <input type="text" id="medications" class="form-control" placeholder="List any medications">
+      <div class="focus-indicator"></div>
+    </div>
+
+    <div class="buttons">
+        <button type="submit" class="btn">Save</button>
+      </div>
+
+    <!-- Section 3: Fee Payment -->
+    <h2>Fee Payment</h2>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="totalAmount">Total Amount</label>
+        <input type="text" id="totalAmount" class="form-control" value="₹800" readonly>
+        <div class="focus-indicator"></div>
+      </div>
+      <div class="form-group">
+        <label for="paymentType">Payment Type</label>
+        <select id="paymentType" class="form-control" required>
+          <option value="">Select Payment Type</option>
+          <option value="Cash">Cash</option>
+          <option value="UPI">UPI</option>
+        </select>
+        <div class="focus-indicator"></div>
+      </div>
+    </div>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="amountPaid">Amount Paid</label>
+        <input type="number" id="amountPaid" class="form-control" required oninput="updateAmountDue()">
+        <div class="focus-indicator"></div>
+      </div>
+      <div class="form-group">
+        <label for="amountDue">Amount Due</label>
+        <input type="text" id="amountDue" class="form-control" value="₹800" readonly>
+        <div class="focus-indicator"></div>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button type="submit" class="btn">Submit Registration</button>
+    </div>
+
+  </form>
+
+  <footer>
+    &copy; 2025 Healthy and Happy Community
+  </footer>
+
+  <script>
+    function calculateAge() {
+      const dob = new Date(document.getElementById('dob').value);
+      if (!isNaN(dob)) {
+        const today = new Date();
+        let age = today.getFullYear() - dob.getFullYear();
+        const m = today.getMonth() - dob.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+          age--;
+        }
+        document.getElementById('age').value = age;
+      }
+    }
+
+    function updateAmountDue() {
+      const total = 800;
+      const paid = parseFloat(document.getElementById('amountPaid').value) || 0;
+      const due = Math.max(0, total - paid);
+      document.getElementById('amountDue').value = `₹${due}`;
+    }
+
+    
+  document.getElementById("TrialDate").addEventListener("change", function () {
+    const trialDate = new Date(this.value);
+    if (!isNaN(trialDate)) {
+      const goldUMSDate = new Date(trialDate);
+      goldUMSDate.setDate(trialDate.getDate() + 3); 
+      document.getElementById("goldUMS").value = goldUMSDate.toISOString().split('T')[0];
+    } else {
+      document.getElementById("goldUMS").value = "";
+    }
+  });
+
+
+  </script>
+
+</body>
+</html>
