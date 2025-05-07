@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - Healthy and Happy Community</title>
+  <link rel="stylesheet" href="style/admin.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f0fff5, #ffffff);
+      color: #333;
+      line-height: 1.6;
+      user-select: none;
+    }
+    nav {
+      background: #00b894;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 15px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      user-select: none;
+    }
+    nav .nav-details {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+    nav .nav-details:hover {
+      color: #dfffe2;
+    }
+    header {
+      background: url('https://source.unsplash.com/1600x600/?wellness,healthy') no-repeat center center/cover;
+      color: #fff;
+      text-align: center;
+      padding: 100px 20px;
+      animation: fadeInZoom 2s ease;
+      user-select: none;
+      position: relative;
+    }
+    header img{
+        object-fit: cover;
+        z-index: -1;
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        filter: blur(5px);
+    }
+    header h1 {
+      font-size: 3rem;
+      text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+      text-transform: capitalize;
+      color: #116400;
+
+    }
+    header p {
+      font-size: 1.8rem;
+      margin-top: 15px;
+      text-shadow: 3px 4px 5px rgba(0,0,0,0.3);
+      text-transform: capitalize;
+      color: #139e36;
+    }
+    section {
+      padding: 60px 20px;
+      max-width: 100%;
+      margin: auto;
+      gap: 20px;
+      animation: fadeInUp 2s ease;
+      text-align: center;
+    }
+    h2 {
+      color: #00b894;
+      text-align: center;
+      font-size: 2rem;
+      text-transform: capitalize;
+      user-select: none;
+    }
+    h3{
+        font-size: 1.3rem;
+        text-align: center;
+        user-select: none;
+        text-shadow: #333;
+        text-transform: capitalize;
+    }
+    section p{
+        color: #0e100fd5;
+    }
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-top: 30px;
+    }
+    .feature {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      transition: transform 0.4s, box-shadow 0.4s;
+    }
+    .feature:hover {
+      transform: translateY(-12px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    }
+    .feature img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+    .herbalife-section {
+      background: #e8fff1;
+      padding: 60px 20px;
+      text-align: center;
+      animation: fadeIn 2s ease;
+    }
+    .herbalife-section img {
+      border-radius: 15px;
+      margin-top: 20px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #00b894;
+      color: white;
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInZoom {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="admin.html" class="nav-details">Home</a>
+    <a href="#mission" class="nav-details">Mission</a>
+    <a href="#offers" class="nav-details">What we offer</a>
+    <a href="#herbalife" class="nav-details">Herbalife</a>
+    <a href="#contact" class="nav-details">Contact</a>
+  </nav>
+
+  <header>
+    <img src="Header.png" alt="background">
+    <h1>healthy and happy community</h1>
+    <p>to make the world healthier and happier</p>
+  </header>
+
+  <section id="mission">
+    <h2>our mission</h2>
+    <h3>To change people's live</h3>
+    <p>We empower individuals to naturally overcome lifestyle-related health issues and achieve sustainable wellness. Our community offers guidance for conditions like <b>thyroid, bp, diabetes, gut health, weight management, sleep issues, knee pain, joint problems, acidity, and more.</b></p>
+  </section>
+
+  <section id="offers">
+    <h2>what we offer</h2>
+    <div class="features">
+      <div class="feature">
+        <img src="coach.png" alt="Health Coaching">
+        <h3>personal health coaching</h3>
+        <p>customized guidance to support your unique wellness journey.</p>
+      </div>
+      <div class="feature">
+        <img src="diet.png" alt="Diet Plan">
+        <h3>diet & nutrition plans</h3>
+        <p>realistic meal plans that help balance your body naturally.</p>
+      </div>
+      <div class="feature">
+        <img src="exercise.png" alt="Exercise">
+        <h3>exercise routines</h3>
+        <p>movements tailored to your needs, from yoga to strength training.</p>
+      </div>
+      <div class="feature">
+        <img src="knowledgeable.png" alt="Wellness Classes">
+        <h3>knowledgeable classes</h3>
+        <p>learn the 'why' behind every health tip and wellness habit.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="herbalife-section" id="herbalife">
+    <h2>about herbalife</h2>
+    <p>We proudly collaborate with herbalife, a global leader in nutrition. Herbalife products help support a healthy lifestyle through science-backed supplements and nutritional solutions. Combined with our coaching, they offer a powerful foundation for achieving your wellness goals.</p>
+    <img src="logoherbal.png" alt="Herbalife" style="width: 420px; height: 250px;">
+  </section>
+
+  <footer id="contact">
+    <p style="text-transform: capitalize;">&copy; 2025 healthy and happy community. all rights reserved.</p>
+    <p>Contact us at: 9832055413 / 9836043283 / 7029889837</p>
+    <p style="margin-top: 10px; font-size: 0.9rem; color: #dfffe2c4;">We are official distributors of herbalife products. We represent Herbalife Nutrition or its subsidiaries. Herbalife is a registered trademark of herbalife international of america, inc.</p>
+    <br>
+  </footer>
+<script>document.addEventListener('contextmenu', event => event.preventDefault());</script>
+</body>
+</html>

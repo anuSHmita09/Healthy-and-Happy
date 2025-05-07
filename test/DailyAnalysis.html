@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guest Registration | Healthy & Happy Community</title>
+  <link rel="stylesheet" href="style/style_reg.css">
+</head>
+<body onload="to_date()">
+<form id="DailyRegister" action="server/DailyRegister.php" method="post">
+  <label for="Date">Date:</label>
+  <script>
+    function to_date(){
+  // Get today's date in YYYY-MM-DD format
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth() + 1).padStart(2, '0');
+  const dd = String(today.getDate()).padStart(2, '0');
+  const formattedDate = `${yyyy}-${mm}-${dd}`;
+  document.getElementById("date").value = formattedDate;  
+}
+
+</script>
+  <input type="date" id="date" name="Date" placeholder="dd-mm-yyyy" required><br><br>
+   <label for="UserId">Member Id:</label>
+  <input type="text" id="Id" name="Id" placeholder="05RS25/001" required>
+      
+<label for="UserName">Member Name:</label>
+  <input type="text" id="uname" name="uname"  required><br><br>
+
+  <label for="Weight">Weight:</label>
+  <input type="text" id="weight" name="weight" placeholder="0.0" required><br><br>
+
+  <label for="TotalAmount">Total Amount:</label>
+  <input type="text" id="TOTALAMOUNT" name="TOTALAMOUNT" placeholder="0.0" required><br><br>
+
+  <label for="AmountPaid">Amount Paid:</label>
+  <input type="text" id="amountpaid" name="amountpaid" placeholder="0.0" required><br><br>
+
+  <label for="AmountDue">Amount Due:</label>
+  <input type="text" id="amountdue" name="amountdue" placeholder="0.0" required><br><br>
+
+<!-- <label for="height">Height:</label>
+  <input type="text" id="Height" name="Height" placeholder="0.0" required> -->
+
+<!-- <label for="BodyFat">Body Fat:</label>
+  <input type="text" id="BodyFat" name="BodyFat" placeholder="0.0">
+  <label for="BMI">BMI:</label>
+  <input type="text" id="BMI" name="BMI" placeholder="0.0"><br><br>
+<label for="VFA">VFA:</label>
+  <input type="text" id="VFA" name="VFA" placeholder="0.0">
+  <label for="BODYAGE">Bodyage:</label>
+  <input type="text" id="BODYAGE" name="BODYAGE" placeholder="0.0"><br><br>
+<label for="RM">RM:</label>
+  <input type="text" id="RM" name="RM" placeholder="0.0">
+  <label for="chest">Chest:</label>
+  <input type="text" id="chest" name="chest" placeholder="0.0"><br><br>
+<label for="waist">Waist:</label>
+  <input type="text" id="waist" name="waist" placeholder="0.0">
+<label for="hip">HIP:</label>
+  <input type="text" id="hip" name="hip" placeholder="0.0"><br><br> -->
+
+  <input type="submit" value="Attendance">
+ 
+</form>
+ <script src="script/script_reg.js"></script>
+</body>
+</html>

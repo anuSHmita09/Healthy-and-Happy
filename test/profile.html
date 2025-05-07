@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Guest Profile</title>
+  <style>
+ body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f2f9f4;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+    }
+    .profile-container {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      max-width: 900px;
+      margin: auto;
+      box-shadow: 0 4px 20px rgba(0, 128, 0, 0.1);
+    }
+    h2 {
+      color: #006400;
+      border-bottom: 2px solid #c6e7cb;
+      padding-bottom: 5px;
+    }
+    .section {
+      margin-bottom: 30px;
+    }
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+    }
+    .label {
+      flex: 1 1 200px;
+      font-weight: bold;
+    }
+    .value {
+      flex: 2 1 400px;
+      padding-left: 10px;
+    }
+    .divider {
+      height: 2px;
+      background-color: #e0f0e6;
+      margin: 20px 0;
+    }
+/* Update Weight Section */
+.update-weight-section {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 128, 0, 0.1);
+  margin-bottom: 40px;
+  max-width: 600px;
+  width: 100%;
+  border-top: 4px solid #006400;
+  margin-right: 20px; /* Space between sections */
+}
+
+/* Update Payment Section */
+.update-payment-section {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 128, 0, 0.1);
+  margin-bottom: 40px;
+  max-width: 600px;
+  width: 100%;
+  border-top: 4px solid #006400;
+  margin-left: 20px; /* Space between sections */
+}
+
+/* Heading style */
+.update-weight-section h3,
+.update-payment-section h3 {
+  color: #006400;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* Row layout for both sections */
+.update-weight-section .row,
+.update-payment-section .row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+
+/* Label styling */
+.update-weight-section .label,
+.update-payment-section .label {
+  font-weight: bold;
+  color: #333;
+  flex: 1 1 200px;
+  font-size: 16px;
+}
+
+/* Value styling */
+.update-weight-section .value,
+.update-payment-section .value {
+  flex: 2 1 400px;
+  padding-left: 10px;
+  font-size: 16px;
+}
+
+.update-weight-section .value input,
+.update-payment-section .value input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background-color: #f4f7f6;
+  transition: border-color 0.3s ease;
+}
+
+.update-weight-section .value input:focus,
+.update-payment-section .value input:focus {
+  border-color: #006400;
+  outline: none;
+}
+
+/* Update Buttons */
+.update-weight-button .btn,
+.update-payment-button .btn {
+  display: flex;
+  justify-content: center;
+  background-color: #006400;
+  color: white;
+  padding: 12px 30px;
+  font-size: 16px;
+  border-radius: 25px;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.update-weight-button .btn:hover,
+.update-payment-button .btn:hover {
+  background-color: #004d00;
+  transform: scale(1.05);
+}
+
+.update-weight-button .btn:active,
+.update-payment-button .btn:active {
+  transform: scale(0.98);
+}
+
+/* Divider for both sections */
+.update-weight-section .divider,
+.update-payment-section .divider {
+  height: 2px;
+  background-color: #e0f0e6;
+  margin: 20px 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .update-weight-section .row,
+  .update-payment-section .row {
+    flex-direction: column;
+  }
+
+  .update-weight-section .label,
+  .update-weight-section .value,
+  .update-payment-section .label,
+  .update-payment-section .value {
+    flex: 1 1 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .update-weight-section .value input,
+  .update-payment-section .value input {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .update-weight-button .btn,
+  .update-payment-button .btn {
+    padding: 14px 20px;
+    width: 100%;
+  }
+}
+
+
+  </style>
+</head>
+<body>
+
+    <div class="sections-container">
+        <!-- Date Section -->
+        <div class="date-section">
+          <div class="row">
+            <div class="label">
+              <label for="date">Today's Date</label>
+            </div>
+            <div class="value">
+              <input type="text" id="currentDate" readonly>
+            </div>
+          </div>
+        </div>
+
+    <!-- Form: Update Today's Weight -->
+<form id="updateWeightForm">
+    <h2>Update Today's Weight</h2>
+    <div class="form-grid update-weight-section">
+      <div class="form-group update-id">
+        <label for="updateId">Guest ID</label>
+        <input type="text" id="updateId" name="updateId" class="form-control" readonly>
+        <div class="focus-indicator"></div>
+      </div>
+  
+      <div class="form-group update-name">
+        <label for="updateName">Name</label>
+        <input type="text" id="updateName" name="updateName" class="form-control" readonly>
+        <div class="focus-indicator"></div>
+      </div>
+  
+      <div class="form-group prev-weight">
+        <label for="previousWeight">Previous Weight (kg)</label>
+        <input type="number" id="previousWeight" name="previousWeight" class="form-control" readonly>
+        <div class="focus-indicator"></div>
+      </div>
+  
+      <div class="form-group current-weight">
+        <label for="currentWeight">Current Weight (kg)</label>
+        <input type="number" id="currentWeight" name="currentWeight" class="form-control" >
+        <div class="focus-indicator"></div>
+      </div>
+    </div>
+  
+    <div class="buttons update-weight-button">
+      <button type="submit" class="btn">Update</button>
+    </div>
+  </form>
+  
+  <hr>
+
+<form id="updatePaymentSection">
+  <div class="update-payment-section">
+    <h3>Update Payment</h3>
+    <div class="row">
+      <div class="label">
+        <label for="id">Guest ID</label>
+      </div>
+      <div class="value">
+        <span id="guestId">12345</span>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="label">
+        <label for="prevAmount">Previous Amount Paid</label>
+      </div>
+      <div class="value">
+        <span id="prevAmount" name="prevAmount">₹800</span>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="label">
+        <label for="currentAmount">Amount Paid Now</label>
+      </div>
+      <div class="value">
+        <input type="number" id="currentAmount" name="currentAmount" placeholder="Enter amount" >
+      </div>
+    </div>
+  
+    <div class="update-payment-button">
+      <button class="btn" onclick="updatePayment()">Update Payment</button>
+    </div>
+  </div>
+  </form>
+
+  <div class="profile-container">
+    <h2>Guest Profile</h2>
+
+    <div class="section">
+      <h3>Personal Information</h3>
+      <div class="row"><div class="label">Guest ID:</div><div class="value" id="profile-id" name="profile-id"></div></div>
+      <div class="row"><div class="label">Full Name:</div><div class="value" id="profile-name" name="profile-name"></div></div>
+      <div class="row"><div class="label">Gender:</div><div class="value" id="profile-gender" name="profile-gender"></div></div>
+      <div class="row"><div class="label">Date of Birth:</div><div class="value" id="profile-dob" name="profile-dob"></div></div>
+      <div class="row"><div class="label">Age:</div><div class="value" id="profile-age" name="profile-age"></div></div>
+      <div class="row"><div class="label">Phone:</div><div class="value" id="profile-phone" name="profile-phone"></div></div>
+      <div class="row"><div class="label">Address:</div><div class="value" id="profile-address" name="profile-address"></div></div>
+      <div class="row"><div class="label">Coach:</div><div class="value" id="profile-coach" name="profile-coach"></div></div>
+      <div class="row"><div class="label">Trial Date:</div><div class="value" id="profile-trial-date" name="profile-trial-date"></div></div>
+      <div class="row"><div class="label">Gold UMS Date:</div><div class="value" id="profile-goldums" name="profile-goldums"></div></div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <h3>Body Evaluation</h3>
+      <div class="row"><div class="label">Height (cm):</div><div class="value" id="profile-height" name="profile-height"></div></div>
+      <div class="row"><div class="label">Weight (kg):</div><div class="value" id="profile-weight" name="profile-weight"></div></div>
+      <div class="row"><div class="label">BMI:</div><div class="value" id="profile-bmi" name="profile-bmi"></div></div>
+      <div class="row"><div class="label">Body Fat (%):</div><div class="value" id="profile-fat" name="profile-fat"></div></div>
+      <div class="row"><div class="label">R.M.:</div><div class="value" id="profile-rm" name="profile-rm"></div></div>
+      <div class="row"><div class="label">V.F.A.:</div><div class="value" id="profile-vfa" name="profile-vfa"></div></div>
+      <div class="row"><div class="label">Body Age:</div><div class="value" id="profile-body-age" name="profile-body-age"></div></div>
+      <div class="row"><div class="label">Chest:</div><div class="value" id="profile-chest" name="profile-chest"></div></div>
+      <div class="row"><div class="label">Waist:</div><div class="value" id="profile-waist" name="profile-waist"></div></div>
+      <div class="row"><div class="label">Hip:</div><div class="value" id="profile-hip" name="profile-hip"></div></div>
+      <div class="row"><div class="label">Remarks:</div><div class="value" id="profile-remarks" name="profile-remarks"></div></div>
+      <div class="row"><div class="label">Medications:</div><div class="value" id="profile-meds" name="profile-meds"></div></div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <h3>Fee Payment</h3>
+      <div class="row"><div class="label">Total Fee:</div><div class="value">₹800</div></div>
+      <div class="row"><div class="label">Payment Type:</div><div class="value" id="profile-payment-type" name="profile-payment-type"></div></div>
+      <div class="row"><div class="label">Amount Paid:</div><div class="value" id="profile-paid" name="profile-paid"></div></div>
+      <div class="row"><div class="label">Amount Due:</div><div class="value" id="profile-due" name="profile-due"></div></div>
+    </div>
+  </div>
+
+  <script>
+
+document.getElementById('updateWeightForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+  
+    const id = document.getElementById('updateId').value;
+    const name = document.getElementById('updateName').value;
+    const prevWeight = document.getElementById('previousWeight').value;
+    const currWeight = document.getElementById('currentWeight').value;
+  
+    if (!currWeight) {
+      alert("Please enter today's weight.");
+      return;
+    }
+  
+    alert(`Weight updated for ${name} (${id}): ${prevWeight} kg ➝ ${currWeight} kg`);
+  });
+
+  </script>
+</body>
+</html>
