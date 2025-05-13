@@ -1,28 +1,29 @@
 <?php
 include "connect.php";
 
-
+$status = "Active";
 $Id = "";
 $UName = "";
 $weight = "";
 $TOTALAMOUNT = "";
 $amountpaid = "";
 $amountdue = "";
-$Date = date("Y-m-d");
+$Date = "";
+
 $result = null; // Initialize $result to null
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $Id = $_POST['Id'];
     $Date = $_POST['Date'];
+    $amountpaid = $_POST['amountpaid'];
     if (isset($_POST["load_Data"])) {
 
     $sql = "SELECT id, uname, weight, TOTALAMOUNT, amountpaid, amountdue from daily where Id='$Id'";
-            //FROM registration g 
-            //JOIN bodyeval b ON g.Id = b.Id 
-            //JOIN payment p ON g.Id = p.Id 
+            //FROM registration g
+            //JOIN bodyeval b ON g.Id = b.Id
+            //JOIN payment p ON g.Id = p.Id
             //WHERE g.Id = '$Id'";
 
-    $result = $conn->query($sql);
-    if ($result && $result->num_rows > 0) {
+    $result = $conn->query($sql);    if ($result && $result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $UName = $row['uname'];
         $weight = $row['weight'];
@@ -41,26 +42,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $UName = $_POST['uname'];
         $weight = $_POST['weight'];
         $TOTALAMOUNT = $_POST['TOTALAMOUNT'];
-        $amountpaid = $_POST['amountpaid'];
+        $amtpaid = $_POST['amountpaid'];
         $amountdue = $_POST['amountdue'];
-        $sql2 = "INSERT INTO `daily`(`id`, `date`, `uname`, `weight`, `TOTALAMOUNT`, `amountpaid`, `amountdue`) 
-           VALUES ('$Id', '$Date', '$UName', '$weight', '$TOTALAMOUNT', '$amountpaid', '$amountdue')"; 
-        if ($conn->query($sql2) === TRUE) {
+        if(floatval($TOTALAMOUNT) <= floatval($amtpaid) + floatval($amountpaid)) {
+    $amtpaid = floatval($amtpaid) + floatval($amountpaid);
+    $amountdue = floatval($TOTALAMOUNT) - floatval($amtpaid);
+}
+        $sql2 = "INSERT INTO `daily`(`id`, `cur_date`, `uname`, `weight`, `TOTALAMOUNT`, `amountpaid`, `amountdue`, `status`) 
+           VALUES ('$Id', '$Date', '$UName', '$weight', '$TOTALAMOUNT', '$amtpaid', '$amountdue', '$status')";
+           
+              
+                  if ($conn->query($sql2) === TRUE) {
         echo "<script>alert('Data updated successfully!');</script>";
     } else {
         echo "<script>alert('Error: " . $sql2 . "<br>" . $conn->error . "');</script>";
     }
     
     }
+  
     if (isset($_POST["view_data"])) {   
         $Id = $_POST['Id'];
-        
-        
-    $sql3 = "SELECT id, date, uname, weight, TOTALAMOUNT, amountpaid, amountdue from daily where id='$Id'";
+
+
+    $sql3 = "SELECT id, cur_date, uname, weight, TOTALAMOUNT, amountpaid, amountdue, STATUS from daily where id='$Id'";
    $result = mysqli_query($conn, $sql3);
    
     }
    
+//$sql = "CALL UpdateexistPerson()";
+//$result = $conn->query($sql);
+//if ($result === false) {
+  //  die("Error executing query: " . $conn->error);
+//}
+// If the stored procedure returns a result set (e.g., the SELECT statement within the loop), you can process it here
+//if ($result->num_rows > 0) {
+  //  while($row = $result->fetch_assoc()) {
+    //    echo $row["uid"];
+    //}
+ // }
+
+
 }
 ?>
 <!DOCTYPE html>
@@ -160,7 +181,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 <form id="frm" action="Daily.php" method="post">
   <label for="Date">Date:</label>
-  <input type="date" id="date" name="Date" value="<?php echo htmlspecialchars($Date); ?>"><br><br>
+  <input type="date" id="Date" name="Date" value="<?php echo htmlspecialchars($Date); ?>"><br><br>
 
   <label for="Id">Member Id:</label>
   <input type="text" id="Id" name="Id" value="<?php echo htmlspecialchars($Id); ?>" > &nbsp; &nbsp;
@@ -175,13 +196,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <input type="text" id="TOTALAMOUNT" name="TOTALAMOUNT" value="<?php echo htmlspecialchars($TOTALAMOUNT); ?>"><br><br>
 
   <label for="AmountPaid">Amount Paid:</label>
-  <input type="text" id="amountpaid" name="amountpaid" value="<?php echo htmlspecialchars($amountpaid); ?>" ><br><br>
+  <input type="text" id="amountpaid" name="amountpaid" oninput="updateAmountDue()" value="<?php echo htmlspecialchars($amountpaid); ?>" ><br><br>
 
   <label for="AmountDue">Amount Due:</label>
   <input type="text" id="amountdue" name="amountdue" value="<?php echo htmlspecialchars($amountdue); ?>" ><br><br>
   <input type="submit" value="update_data" name="update_data"> &nbsp; &nbsp;
     <input type="submit" name="view_data" value="View Data"><br><br>
- <table border="2">
+ <table >
                         <tr class="table-header">
                         <th>ID</th>
                         <th>Date</th>
@@ -199,7 +220,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         while ($row = mysqli_fetch_assoc(result: $result)) {
                             echo "<tr>";
                             echo "<td>" . $row['id'] . "</td>";
-                            echo "<td>" . $row['date'] . "</td>";
+                            echo "<td>" . $row['cur_date'] . "</td>";
                             echo "<td>" . $row['uname'] . "</td>";
                             echo "<td>" . $row['weight'] . "</td>";
                             echo "<td>" . $row['TOTALAMOUNT'] . "</td>";
@@ -213,7 +234,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 </table>
 </form>
+<script>
 
+function updateAmountDue() {
+    const total = parseFloat(document.getElementById('TOTALAMOUNT').value) || 0;
+    const paid = parseFloat(document.getElementById('amountpaid').value) || 0;
+    const due = Math.max(0, total - paid);
+    document.getElementById('amountdue').value = due.toFixed(2);
+}
+
+function validateForm() {
+    const id = document.getElementById('Id').value.trim();
+    const date = document.getElementById('Date').value;
+    const amount = document.getElementById('amountpaid').value;
+    
+    if (!id) {
+        alert('Please enter Member ID');
+        return false;
+    }
+    
+    if (!date) {
+        alert('Please select a date');
+        return false;
+    }
+    
+    if (amount && isNaN(parseFloat(amount))) {
+        alert('Amount must be a valid number');
+        return false;
+    }
+    
+    return true;
+}
+
+
+</script>
 
 </body>
 </html>

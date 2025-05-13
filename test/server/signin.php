@@ -24,10 +24,10 @@ if ($result->num_rows > 0) {
     exit();
 } else {
     // Authentication failed
-    
-    echo "<script>alert('Query failed.');</script>";
-    
+
+    echo "<script>alert('Invalid Credentials.');</script>";
+    header("Location: http://localhost/main/c/test/server/signin.php");
 }
 
 $conn->close();
- ?>
+?>

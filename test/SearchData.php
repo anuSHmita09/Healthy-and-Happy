@@ -13,8 +13,11 @@ else{
 }
   // Check connection
    // Prepare the SQL query
-  $sql = "SELECT * FROM bodyeval WHERE $column LIKE '%" . $searchTerm . "%'";
-  $result = mysqli_query($conn, $sql);
+ // $sql = "SELECT * FROM bodyeval,existbody WHERE $column LIKE '%" . $searchTerm . "%'";
+  // $result = mysqli_query($conn, $sql);
+
+   $sql = "SELECT * FROM bodyeval WHERE $column LIKE '%" . $searchTerm . "%'";
+    $result = mysqli_query($conn, $sql);
 ?>
 <!DOCTYPE html>
 <html>

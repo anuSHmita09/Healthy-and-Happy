@@ -1,8 +1,98 @@
+
+<?php
+include "server/connect.php";
+
+
+$EID = "";
+$ENAME = "";
+$EGENDER = "";
+$EDOB= "";
+$EAGE = "";
+$EPHONE = "";
+$EADDRESS = "";
+$ECOACH = "";
+$EDATE = date("Y-m-d");
+$STATUS = "";
+$result = null; // Initialize $result to null
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $EID = $_POST['EID'];
+       if (isset($_POST["load_Data"])) {
+
+    $sql = "EID,	ENAME,	EGENDER,	EDOB,	EAGE,	EPHONE,	EADDRESS,	ECOACH,	EDATE,	STATUS	 from existing_users where EID='$EID'";
+            
+
+    $result = $conn->query($sql);
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $ENAME = $row['ENAME'];
+        $EGENDER = $row['EGENDER'];
+        $EDOB = $row['EDOB'];
+        $EAGE = $row['EAGE'];
+        $EPHONE = $row['EPHONE'];
+        $EADDRESS = $row['EADDRESS'];
+        $ECOACH = $row['ECOACH'];
+        $EDATE = $row['EDATE'];
+        $STATUS = $row['STATUS'];
+    } else {
+        echo "<script>alert('No data found for ID: $EID');</script>";
+    }
+    
+    }
+
+    if (isset($_POST["Gold_registration"])) {
+       $Height=$_POST['Height'];
+          $Weight=$_POST['Weight'];
+          $BodyFat=$_POST['BodyFat'];
+          $BMI=$_POST['BMI']; 
+          $VFA=$_POST['VFA'];
+          $BODYAGE=$_POST['BODYAGE'];
+          $RM=$_POST['RM'];
+          $Chest=$_POST['chest'];
+          $Waist=$_POST['waist'];
+          $Hip=$_POST['hip'];
+          $Date=$_POST['trialDate'];
+          $REMARKS=$_POST['remarks'];
+          $MEDICATION=$_POST['medications'];
+
+          $sql2=  "INSERT INTO existbody (EID, ENAME, EHEIGHT, EWEIGHT, EBODYFAT, EBMI, EVFA, EBODYAGE, ERM, ECHEST, EWAIST, EHIP, EDate, EMEDICATION, EREMARKS) 
+          VALUES ('$EID', '$ENAME', '$Height', '$Weight', '$BodyFat', '$BMI', '$VFA', '$BODYAGE', '$RM', '$Chest', '$Waist', '$Hip', '$Date', '$MEDICATION', '$REMARKS')";
+
+          $conn->query($sql2);
+
+          $TOTALAMOUNT=$_POST['totalAmount'];
+          $paymentType=$_POST['paymentType'];
+          $AMOUNTPAID=$_POST['amountPaid'];
+          $AMOUNTDUE=$_POST['amountDue']; 
+            $sql3="INSERT INTO payment ( TOTALAMOUNT, AMOUNTPAID, AMOUNTDUE, MODEOFPAY, DATE, ID, UNAME) 
+            VALUES ('$TOTALAMOUNT','$AMOUNTPAID','$AMOUNTDUE','$paymentType','$Date','$Id','$uname')";
+
+            $sql4="INSERT INTO daily (Id, uname, weight, TOTALAMOUNT, amountpaid, amountdue)
+            VALUES ('$Id', '$uname', '$Weight', '$TOTALAMOUNT', '$AMOUNTPAID', '$AMOUNTDUE')";
+
+              if ( $conn->query($sql3) === TRUE && $conn->query($sql4) === TRUE) {
+              $path=chdir("../");
+              echo "<script> window.location.href='../admin.html'</script>";
+            } else {
+              echo "Error: " . $sql1 ."<br>". $sql2 ."<br>". $sql3 . "<br>" .$sql4. "<br>". $conn->error;
+            }
+         
+
+    }
+    $conn->close();
+  }
+
+
+
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Guest Registration</title>
+  <title>Existing User Registration</title>
   <link rel="stylesheet" href="style/admin.css">
   <style>
     body {
@@ -115,7 +205,7 @@
           <a href="#"> Clients</a>
           <div class="dropdown-content">
             <a href="registration.html">New Registration</a>
-            <a href="existingUser.php">Gold UMS Registration</a>
+            <a href="existingUser.html">Gold UMS Registration</a>
             <a href="SearchData.php">Search Profile</a>
             <a href="#">Client Reports</a>
             
@@ -128,7 +218,7 @@
         <a href="index.html">Logout</a>
       </nav>
 
-  <form id="guestForm" action="server/registration.php" onsubmit="return validate()" method="POST">
+  <form id="existingUserForm" action="existingUser.php" method="POST">
 
     <!-- Section 1: Personal Info -->
     <h2>Personal Information</h2>
@@ -136,8 +226,12 @@
       <div class="form-group">
         <label for="Id">Guest ID</label>
         <input type="text" id="Id" class="form-control" name="Id" data-rule-minlength="10" data-rule-maxlength="10" placeholder="05RS25/001" required>
+        
         <div class="focus-indicator"></div>
+        <button type="submit" class="btn" name="load_Data" value="Load Data">Load Data</button>
       </div>
+      
+        
       <div class="form-group">
         <label for="uname">Full Name</label>
         <input type="text" id="uname" class="form-control" name="uname" placeholder="Your name" required>
@@ -148,17 +242,12 @@
     <div class="form-grid">
       <div class="form-group">
         <label for="gender">Gender</label>
-        <select id="gender" class="form-control" name="gender" required>
-          <option value="">Select Gender</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-          <option value="Other">Other</option>
-        </select>
+        <input type="text" id="gender" class="form-control" name="gender" readonly>
         <div class="focus-indicator"></div>
       </div>
       <div class="form-group">
         <label for="dob">Date of Birth</label>
-        <input type="date" id="dob" class="form-control" name="dob" required oninput="calculateAge()">
+        <input type="text" id="dob" class="form-control" name="dob" readonly>
         <div class="focus-indicator"></div>
       </div>
     </div>
@@ -190,24 +279,17 @@
     </div>
     <div class="form-group">
       <label for="period">Status</label>
-      <input type="text" id="status" name="status" class="form-control" value="Trial" readonly>
+      <input type="text" id="status" name="status" class="form-control" value="Active" readonly>
+      <div class="focus-indicator"></div>
+    </div>
+    <div class="form-group">
+      <label for="period">Date</label>
+      <input type="text" id="date" name="date" class="form-control" >
       <div class="focus-indicator"></div>
     </div>
 </div>
-  <div class="form-grid">
-    <div class="form-group">
-      <label for="TrialDate">Trial Date</label>
-      <input type="date" id="trialDate" name="trialDate" class="form-control" required>
-      <div class="focus-indicator"></div>
-    </div>
-    <div class="form-group">
-      <label for="goldUMS">Gold UMS Date</label>
-      <input type="date" id="goldums" name="goldums" class="form-control" readonly>
-      <div class="focus-indicator"></div>
-    </div>
-    </div>
 
-   
+
     <!-- Section 2: Body Evaluation -->
     <h2>Body Evaluation</h2>
 
@@ -293,7 +375,7 @@
     <div class="form-grid">
       <div class="form-group">
         <label for="totalAmount">Total Amount</label>
-        <input type="text" id="totalAmount" name="totalAmount" class="form-control" value="₹800" readonly>
+        <input type="text" id="totalAmount" name="totalAmount" class="form-control" value="₹7399" readonly>
         <div class="focus-indicator"></div>
       </div>
       <div class="form-group">
@@ -315,13 +397,13 @@
       </div>
       <div class="form-group">
         <label for="amountDue">Amount Due</label>
-        <input type="text" id="amountDue" name="amountDue" class="form-control" value="₹800" readonly>
+        <input type="text" id="amountDue" name="amountDue" class="form-control" value="₹7399" readonly>
         <div class="focus-indicator"></div>
       </div>
     </div>
     <div class="form-grid">
  <div class="buttons">
-        <button type="submit" class="btn" name="submit" value="Registration">Register</button>
+        <button type="submit" class="btn" name="Gold_registration" value="Gold Registration">Gold Registration</button>
       </div>
 </div>
    
@@ -353,32 +435,7 @@
     }
 
     
-  document.getElementById("trialDate").addEventListener("change", function () {
-    const trialDate = new Date(this.value);
-    if (!isNaN(trialDate)) {
-      const goldUMSDate = new Date(trialDate);
-      goldUMSDate.setDate(trialDate.getDate() + 3); 
-      document.getElementById("goldums").value = goldUMSDate.toISOString().split('T')[0];
-    } else {
-      document.getElementById("goldums").value = "";
-    }
-  });
-
-  function validate()
-  {
-    let id = document.getElementById("Id").value;
-    let phone = document.getElementById("phone").value;
-    if(id.length != 10)
-    {
-      alert("Guest ID should be 10 characters long.");
-      return false;
-    }
-    if(phone.length != 10)
-    {
-      alert("Phone number should be 10 digits long.");
-      return false;
-    }
-  }
+  
 
 
   </script>

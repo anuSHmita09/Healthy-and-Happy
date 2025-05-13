@@ -532,4 +532,11 @@
         left: 2rem;
         right: 2rem;
       }
+      .btnlogo {
+      height: 10px;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 2;
+      
+    }
     }
